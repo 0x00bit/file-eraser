@@ -1,9 +1,5 @@
-#Filters
-$filter = {
-    :png => 1,
-    :jpeg => 2,
-    :jpg => 3
-}
+$user = []
+$u_inpt
 
 def menu
     puts "+-----------------------------+"
@@ -13,69 +9,49 @@ end
 
 def main(user_n)
     $files_in_folder = Dir.glob('./*').select { |e| File.file? e }
-    size = user_n.length
     #Set the filters here
-
     user_n.each do |i|
-        case user_n[i]
-            when "png"
-                for i in $files_in_folder
-                    if i[-4..-1] == 'png' 
-                        File.delete(i)
-                        puts "arquivo apagado: " + i
-
-                end
+        $files_in_folder.each do |f|
+            if f[-4..-1] == i || f[-5..-1] == i
+                File.delete(f)
+                puts "removed file " + f
             end
-            
-            when "jpeg"
-                for i in $files_in_folder
-                    if i[-4..-1] == 'jpeg' 
-                        File.delete(i)
-                        puts "arquivo apagado: " + i
-
-                end
-            end
-
-            when "jpg"
-                for i in $files_in_folder
-                    if i[-4..-1] == 'jpg' 
-                        File.delete(i)
-                        puts "arquivo apagado: " + i
-                end
-            end
-            else
-                puts "Formato não encontrado"
-            end
+            f = f.to_i+1
         end
         i = i.to_i+1
     end
-
-
+    puts "end of execution..."
+    exit()
+end
 menu
-
-$user = []
-$u_inpt
 puts "+-----------------------------+"
-puts "| [1]=PNG; [2]=JPEG; [3]=JPG  |"
+puts "| [1]=PNG  [2]=JPG  [3]=JPEG  |"
+puts "| [4]=WEBP [5]=FAV            |"
 puts "| [*] = exit                  |"
 puts "| [r] = run!                  |"
 puts "+-----------------------------+"
+
 while $u_inpt != '*' do
     $u_inpt = gets.chomp()
     case $u_inpt
     when '1'
-        $user.push(":png")
-        puts "chosen value: " + "1"
+        $user.push(".png")
+        puts "chosen value: " + $u_inpt
     when '2'
-        $user.push(":jpeg")
-        puts "chosen value: " + "2"
+        $user.push(".jpg")
+        puts "chosen value: " + $u_inpt
     when '3'
-        $user.push(":jpg")
-        puts "chosen value: " + "3" 
+        $user.push(".jpeg")
+        puts "chosen value: " + $u_inpt
+    when '4'
+        $user.push(".webp")
+        puts "chosen value: " + $u_inpt
+    when '5'
+        $user.push(".fav")
+        puts "chosen value: " + $u_inpt 
     when 'r'
+        "chosen value: run program"
         main($user)
-        puts $user
-        $u_inpt = '*'
     when '*'
         puts "quitting..."
         exit()
@@ -84,5 +60,3 @@ while $u_inpt != '*' do
     end 
 end
 puts "final chosen values: " + $user[]
-
-
